@@ -199,5 +199,5 @@ sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d'
 
 ##### End of installation, continue in web browser
 echo "###############################################################################################"
-echo "Naviagte to http://$HOSTNAME/install.php in you web browser to finish the installation."
+echo "Naviagte to http://$HOSTNAME in you web browser to finish the installation."
 echo "###############################################################################################"
