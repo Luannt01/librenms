@@ -38,6 +38,7 @@ echo "Add librenms user"
 echo "###########################################################"
 # add user link home directory, do not create home directory
 useradd librenms -d /opt/librenms -M -r -s "$(which bash)"
+usermod -a -G sudo librenms
 
 ##### Download LibreNMS itself
 echo "Downloading libreNMS to /opt/librenms"
