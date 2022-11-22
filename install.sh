@@ -72,7 +72,7 @@ echo "Use q to quit the list and enter your choice"
 read -p "Please [Enter] to continue..." ignore
 echo "-----------------------------"
 echo " "
-timedatectl list-timezones
+timedatectl list-timezones | grep Asia
 echo " "
 echo "Enter system time zone of choice:"
 read TZ
@@ -106,6 +106,7 @@ mysql -uroot -e "CREATE DATABASE librenms CHARACTER SET utf8 COLLATE utf8_unicod
 mysql -uroot -e "CREATE USER 'librenms'@'localhost' IDENTIFIED BY '$ANS';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON librenms.* TO 'librenms'@'localhost';"
 mysql -uroot -e "FLUSH PRIVILEGES;"
+mysql -uroot -e "SET TIME_ZONE='+00:00';"
 
 ##### Configure PHP-FPM
 echo "Configure PHP-FPM (FastCGI Process Manager)"
