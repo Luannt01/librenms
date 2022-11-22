@@ -21,13 +21,17 @@ read -p "Please [Enter] to continue..." ignore
 ##### Installing Required Packages
 apt install -y software-properties-common
 add-apt-repository universe
+add-apt-repository ppa:ondrej/php
 apt update
 echo "Upgrading installed packages"
 echo "###########################################################"
 apt upgrade -y
 echo "Installing LibreNMS required packages"
 echo "###########################################################"
-apt install -y acl curl fping git graphviz imagemagick mariadb-client mariadb-server mtr-tiny nginx-full nmap php-cli php-curl php-fpm php-gd php-gmp php-json php-mbstring php-mysql php-snmp php-xml php-zip rrdtool snmp snmpd whois unzip python3-pymysql python3-dotenv python3-redis python3-setuptools python3-systemd python3-pip
+apt install acl curl fping git graphviz imagemagick mariadb-client mariadb-server \
+mtr-tiny nginx-full nmap php-cli php-curl php-fpm php-gd php-gmp php-json php-mbstring \
+php-mysql php-snmp php-xml php-zip rrdtool snmp snmpd whois unzip \
+python3-pymysql python3-dotenv python3-redis python3-setuptools python3-systemd python3-pip
 
 ##### Add librenms user
 echo "Add librenms user"
