@@ -17,7 +17,11 @@ echo "The script will perform apt install and update commands."
 echo "Use at your own risk"
 echo "###########################################################"
 read -p "Please [Enter] to continue..." ignore
-
+echo "Please create a password for LibreNMS database user on MariaDB - you need it later during web installation:"
+read ANS
+echo ########################
+echo "Enter nginx server_name [x.x.x.x or serv.examp.com]: "
+read HOSTNAME
 ##### Installing Required Packages
 apt install software-properties-common
 add-apt-repository universe
@@ -43,7 +47,6 @@ echo "###########################################################"
 # add user link home directory, do not create home directory
 useradd librenms -d /opt/librenms -M -r -s "$(which bash)"
 usermod -a -G sudo librenms
-passwd librenms
 ##### Download LibreNMS itself
 echo "Downloading libreNMS to /opt/librenms"
 echo "###########################################################"
@@ -91,8 +94,6 @@ sed -i '/mysqld]/ a innodb_file_per_table=1' /etc/mysql/mariadb.conf.d/50-server
 systemctl enable mariadb
 systemctl restart mariadb
 # Pass commands to mysql and create DB, user, and privlages
-echo "Please create a password for LibreNMS database user on MariaDB - you need it later during web installation:"
-read ANS
 echo "###########################################################"
 echo "######### MySQL DB:librenms Password:$ANS #################"
 echo "###########################################################"
@@ -117,8 +118,6 @@ echo "###########################################################"
 # Create NGINX .conf file
 echo "We need to change the sever name to the current IP unless the name is resolvable /etc/nginx/conf.d/librenms.conf"
 echo "################################################################################"
-echo "Enter nginx server_name [x.x.x.x or serv.examp.com]: "
-HOSTNAME="librenms.local"
 echo 'server {'> /etc/nginx/conf.d/librenms.conf
 echo ' listen      80;' >>/etc/nginx/conf.d/librenms.conf
 echo " server_name $HOSTNAME;" >>/etc/nginx/conf.d/librenms.conf
@@ -189,9 +188,8 @@ sudo chmod -R ug=rwX /opt/librenms/rrd /opt/librenms/logs /opt/librenms/bootstra
 echo "Select yes to the following or you might get a warning during validation"
 echo "------------------------------------------------------------------------"
 # Remove github leftovers
-echo y|sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d'
+sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d'
 # Daily Update
-sudo su librenms bash -c '/opt/librenms/daily.sh'
 ##### End of installation, continue in web browser
 echo "###############################################################################################"
 echo "Naviagte to http://$HOSTNAME in you web browser to finish the installation."
