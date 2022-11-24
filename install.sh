@@ -19,9 +19,9 @@ echo "###########################################################"
 read -p "Please [Enter] to continue..." ignore
 
 ##### Installing Required Packages
-apt install -y software-properties-common
+apt install software-properties-common
 add-apt-repository universe
-add-apt-repository ppa:ondrej/php
+add-apt-repository ppa:ondrej/php -y
 apt update
 echo "Upgrading installed packages"
 echo "###########################################################"
@@ -30,7 +30,7 @@ echo "Installing LibreNMS required packages"
 echo "###########################################################"
 apt install software-properties-common
 add-apt-repository universe
-add-apt-repository ppa:ondrej/php
+add-apt-repository ppa:ondrej/php -y
 apt update
 apt install -y acl curl fping git graphviz imagemagick mariadb-client \
 mariadb-server mtr-tiny nginx-full nmap php-cli php-curl php-fpm php-gd \
@@ -70,17 +70,7 @@ su librenms bash -c '/opt/librenms/scripts/composer_wrapper.php install --no-dev
 ##### Set system timezone
 echo "Setup of system and PHP timezone"
 echo "###########################################################"
-# Asking for timezome of choice
-echo "We have to set the system time zone."
-echo "You will get a list of all available time zones"
-echo "Use q to quit the list and enter your choice"
-read -p "Please [Enter] to continue..." ignore
-echo "-----------------------------"
-echo " "
-timedatectl list-timezones | grep Asia
-echo " "
-echo "Enter system time zone of choice:"
-read TZ
+TZ="Asia/Ho_Chi_Minh"
 timedatectl set-timezone $TZ
 # Set timezone
 echo "Setting PHP time zone"
@@ -111,7 +101,6 @@ mysql -uroot -e "CREATE DATABASE librenms CHARACTER SET utf8 COLLATE utf8_unicod
 mysql -uroot -e "CREATE USER 'librenms'@'localhost' IDENTIFIED BY '$ANS';"
 mysql -uroot -e "GRANT ALL PRIVILEGES ON librenms.* TO 'librenms'@'localhost';"
 mysql -uroot -e "FLUSH PRIVILEGES;"
-mysql -uroot -e "SET TIME_ZONE='+00:00';"
 
 ##### Configure PHP-FPM
 echo "Configure PHP-FPM (FastCGI Process Manager)"
