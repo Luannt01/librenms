@@ -189,7 +189,7 @@ sudo chmod -R ug=rwX /opt/librenms/rrd /opt/librenms/logs /opt/librenms/bootstra
 echo "Select yes to the following or you might get a warning during validation"
 echo "------------------------------------------------------------------------"
 # Remove github leftovers
-sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d'
+sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d -y'
 # Daily Update
 sudo su librenms bash -c '/opt/librenms/daily.sh'
 ##### End of installation, continue in web browser
