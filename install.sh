@@ -118,7 +118,7 @@ echo "###########################################################"
 echo "We need to change the sever name to the current IP unless the name is resolvable /etc/nginx/conf.d/librenms.conf"
 echo "################################################################################"
 echo "Enter nginx server_name [x.x.x.x or serv.examp.com]: "
-read HOSTNAME
+HOSTNAME="librenms.local"
 echo 'server {'> /etc/nginx/conf.d/librenms.conf
 echo ' listen      80;' >>/etc/nginx/conf.d/librenms.conf
 echo " server_name $HOSTNAME;" >>/etc/nginx/conf.d/librenms.conf
@@ -189,7 +189,7 @@ sudo chmod -R ug=rwX /opt/librenms/rrd /opt/librenms/logs /opt/librenms/bootstra
 echo "Select yes to the following or you might get a warning during validation"
 echo "------------------------------------------------------------------------"
 # Remove github leftovers
-sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d -y'
+echo y|sudo su librenms bash -c '/opt/librenms/scripts/github-remove -d'
 # Daily Update
 sudo su librenms bash -c '/opt/librenms/daily.sh'
 ##### End of installation, continue in web browser
