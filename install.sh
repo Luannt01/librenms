@@ -12,7 +12,7 @@ fi
 
 ##### Start script
 echo "###########################################################"
-echo "This script will install LibreNMS using NGINX webserver PHP-8.1, developed for Ubuntu 20.04 LTS"
+echo "This script will install LibreNMS using NGINX webserver PHP-8.2, developed for Ubuntu 20.04 LTS"
 echo "The script will perform apt install and update commands."
 echo "Use at your own risk"
 echo "###########################################################"
@@ -79,8 +79,8 @@ timedatectl set-timezone $TZ
 echo "Setting PHP time zone"
 echo "Changing to $TZ"
 echo "################################################################################"
-sed -i "/;date.timezone =/ a date.timezone = $TZ" /etc/php/8.1/fpm/php.ini
-sed -i "/;date.timezone =/ a date.timezone = $TZ" /etc/php/8.1/cli/php.ini
+sed -i "/;date.timezone =/ a date.timezone = $TZ" /etc/php/8.2/fpm/php.ini
+sed -i "/;date.timezone =/ a date.timezone = $TZ" /etc/php/8.2/cli/php.ini
 
 ##### Configure MariaDB
 echo "Configuring MariaDB"
@@ -106,11 +106,11 @@ mysql -uroot -e "FLUSH PRIVILEGES;"
 ##### Configure PHP-FPM
 echo "Configure PHP-FPM (FastCGI Process Manager)"
 echo "###########################################################"
-cp /etc/php/8.1/fpm/pool.d/www.conf /etc/php/8.1/fpm/pool.d/librenms.conf
-sed -i 's/^\[www\]/\[librenms\]/' /etc/php/8.1/fpm/pool.d/librenms.conf
-sed -i 's/^user = www-data/user = librenms/' /etc/php/8.1/fpm/pool.d/librenms.conf
-sed -i 's/^group = www-data/group = librenms/' /etc/php/8.1/fpm/pool.d/librenms.conf
-sed -i 's/^listen =.*/listen = \/run\/php-fpm-librenms.sock/' /etc/php/8.1/fpm/pool.d/librenms.conf
+cp /etc/php/8.2/fpm/pool.d/www.conf /etc/php/8.2/fpm/pool.d/librenms.conf
+sed -i 's/^\[www\]/\[librenms\]/' /etc/php/8.2/fpm/pool.d/librenms.conf
+sed -i 's/^user = www-data/user = librenms/' /etc/php/8.2/fpm/pool.d/librenms.conf
+sed -i 's/^group = www-data/group = librenms/' /etc/php/8.2/fpm/pool.d/librenms.conf
+sed -i 's/^listen =.*/listen = \/run\/php-fpm-librenms.sock/' /etc/php/8.2/fpm/pool.d/librenms.conf
 
 ##### Configure web server (NGINX
 echo "Configure web server (NGINX)"
@@ -143,7 +143,7 @@ echo '}' >>/etc/nginx/conf.d/librenms.conf
 # remove the default site link
 rm /etc/nginx/sites-enabled/default
 systemctl restart nginx
-systemctl restart php8.1-fpm
+systemctl restart php8.2-fpm
 
 ##### Enable lnms command completion
 echo "Enable lnms command completion"
